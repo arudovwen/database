@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 02, 2022 at 03:55 PM
+-- Generation Time: Feb 02, 2022 at 04:13 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -52,6 +52,7 @@ INSERT INTO `admins` (`id`, `created_at`, `updated_at`, `name`, `email`, `passwo
 CREATE TABLE `brands` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `store_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `category_id` bigint(20) UNSIGNED DEFAULT NULL
@@ -61,13 +62,15 @@ CREATE TABLE `brands` (
 -- Dumping data for table `brands`
 --
 
-INSERT INTO `brands` (`id`, `name`, `created_at`, `updated_at`, `category_id`) VALUES
-(1, 'Brand 1', NULL, NULL, NULL),
-(8, 'Indomie', '2021-12-09 16:18:09', '2021-12-09 16:18:09', 15),
-(9, 'anoter', '2022-01-03 17:49:17', '2022-01-03 17:49:17', 15),
-(10, 'hhhh', '2022-01-03 17:51:39', '2022-01-03 17:51:39', 15),
-(11, 'hhh', '2022-01-03 17:55:00', '2022-01-03 17:55:00', 15),
-(12, 'new b', '2022-01-26 02:52:01', '2022-01-26 02:52:01', 5);
+INSERT INTO `brands` (`id`, `name`, `store_id`, `created_at`, `updated_at`, `category_id`) VALUES
+(1, 'Good mama', 1, '2022-01-03 17:40:43', '2022-01-03 17:40:43', 1),
+(2, 'Klin', 1, '2022-01-03 17:41:38', '2022-01-03 17:41:38', 1),
+(3, 'Dano', 1, '2022-01-03 17:58:40', '2022-01-03 17:58:40', 2),
+(4, 'Indomie', 1, '2022-01-03 17:59:32', '2022-01-03 17:59:32', 5),
+(5, 'Knorr', 1, '2022-01-03 18:00:21', '2022-01-03 18:00:21', 5),
+(6, 'Hollandia', 1, '2022-01-03 18:04:14', '2022-01-03 18:04:14', 2),
+(7, 'Cway', 1, '2022-01-03 18:05:37', '2022-01-03 18:05:37', 5),
+(8, 'Durex', 1, '2022-01-03 18:50:25', '2022-01-03 18:50:25', 4);
 
 -- --------------------------------------------------------
 
@@ -119,14 +122,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(4, 'Toys', '2021-10-04 02:15:47', '2021-10-04 02:15:47'),
-(5, 'Detergent', '2021-10-04 02:15:47', '2021-10-04 02:15:47'),
-(6, 'Clothes', '2021-10-04 02:15:47', '2021-10-04 02:15:47'),
-(7, 'Home accessories', '2021-10-04 02:15:47', '2021-10-04 02:15:47'),
-(8, 'Kitchen utensils', '2021-10-04 02:15:47', '2021-10-04 02:15:47'),
-(9, 'Clothes', '2021-10-04 02:15:47', '2021-10-04 02:15:47'),
-(15, 'Food', '2021-12-09 16:17:59', '2021-12-09 16:17:59'),
-(16, 'newbr', '2022-01-26 02:51:53', '2022-01-26 02:51:53');
+(1, 'Detergents', '2022-01-03 17:36:34', '2022-01-03 17:36:34'),
+(2, 'Beverages', '2022-01-03 17:36:44', '2022-01-03 17:36:44'),
+(3, 'Kitchen Items', '2022-01-03 17:38:15', '2022-01-03 17:38:15'),
+(4, 'Condoms', '2022-01-03 17:39:11', '2022-01-03 17:39:11'),
+(5, 'Grocery', '2022-01-03 17:39:48', '2022-01-03 17:39:48');
 
 -- --------------------------------------------------------
 
@@ -911,7 +911,7 @@ INSERT INTO `payments` (`id`, `type`, `reference`, `amount`, `status`, `network`
 CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_desc` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_desc` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` int(11) NOT NULL,
   `manufacture_date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `expiry_date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -934,18 +934,20 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `product_name`, `product_desc`, `price`, `manufacture_date`, `expiry_date`, `product_no`, `batch_no`, `in_stock`, `category_id`, `store_id`, `created_at`, `updated_at`, `image`, `sales_price`, `active`, `brand_id`, `weight`) VALUES
-(1, 'jogg', 'fff', 4000, NULL, NULL, '23244', '32424', -52, 6, 1, NULL, '2022-01-27 17:03:44', NULL, '3500', 1, 1, '10'),
-(11, 'Game', 'descrip', 400, NULL, NULL, '555391', NULL, 2, 15, 1, '2021-12-11 02:25:56', '2021-12-11 02:25:56', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639189438\\/z0zjnokgevrxz8xxopsu.jpg\"]', '3500', 0, 8, '12'),
-(12, 'hhhh', 'descrip', 30000, NULL, NULL, '701204', NULL, 2, 15, 1, '2021-12-11 02:25:56', '2021-12-11 02:25:56', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639189469\\/m8lzip5zxdsfjvmw8a0r.jpg\"]', '2000', 0, 8, '15'),
-(13, 'Game', 'descrip', 4000, NULL, NULL, '10661', NULL, 2, 15, 1, '2021-12-11 02:31:33', '2021-12-11 02:31:33', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639189887\\/legu2hbjtnijvmj6elil.jpg\"]', '35000', 0, 8, '10'),
-(14, 'JOHN', 'ff', 30, NULL, NULL, '654203', NULL, 2, 15, 1, '2021-12-11 02:32:46', '2021-12-11 02:32:46', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639189961\\/zzu9vbkqaip5iziaqdju.jpg\"]', '55', 0, 8, '20'),
-(15, 'JOHN', 'edett', 4, NULL, NULL, '220989', NULL, 4, 15, 1, '2021-12-11 02:33:59', '2021-12-11 02:33:59', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639190035\\/xhdr1sej5hytuluiwjgr.jpg\"]', '4000', 0, 8, '20'),
-(16, 'JOHN', '3333', 333, NULL, NULL, '873342', NULL, 3, 15, 1, '2021-12-11 02:34:52', '2021-12-11 02:34:52', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639190090\\/ajrprxmhhfexrdp4bbzj.jpg\"]', '33', 0, 8, '10'),
-(17, 'JOHN', 'ier', 30, NULL, NULL, '121513', NULL, 30, 15, 1, '2021-12-11 02:42:41', '2021-12-11 02:42:41', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639190540\\/d9qshmxj9y00jpwioorr.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639190540\\/t3y4ej50ykqb8uvlphky.jpg\"]', '30', 0, 8, '15'),
-(18, 'JOHN', 'descrip', 3000, NULL, NULL, '40366', NULL, 30, 15, 1, '2021-12-11 02:52:51', '2021-12-11 02:52:51', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639191167\\/rti1jqutt3vrjibftok8.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639191167\\/fomkkkpsacjhryihrr99.jpg\"]', '4000', 0, 8, '11'),
-(19, 'Test weight', 'desc', 46, NULL, NULL, '498985', NULL, 30, 15, 1, '2021-12-18 15:20:38', '2021-12-18 15:20:38', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639840748\\/nhlzwrow72tpfmptkitp.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1639840748\\/ia94tbtwxpgwlixcqtp3.jpg\"]', '67', 0, 8, '7'),
-(20, 'uuh', 'dhfhfh', 22, NULL, NULL, '566228', NULL, 2, 15, 1, '2022-01-03 18:31:02', '2022-01-03 18:31:02', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234605\\/usmsyatvqvfkbn7zrjef.jpg\"]', '0', 0, 9, '20'),
-(21, 'nenwnw', 'ffff', 33, NULL, NULL, '892413', NULL, 33, 15, 1, '2022-01-03 18:33:43', '2022-01-03 18:33:43', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234605\\/usmsyatvqvfkbn7zrjef.jpg\"]', '0', 0, 8, '3');
+(1, 'Good Mama Laundry Detergent Washing Soap  -900g', 'GOOD MAMA LAUNDRY DETERGENT WASHING SOAP Contains the Power of Stain Removal Ingredients, Which helps to Remove tough Stains in Just One wash. This Powder Detergent has Got you Covered When you Need to Wash Dirty Laundries. It Comes with High-performance Cleaning Agents and Enhanced with Fresh Sensation Aroma. The Powder Detergents Keeps Clothes Sparkling Clean with its Powerful Formula. The Detergent Removes Tough Stains on Clothes as Well as Grease and Residues. The Powder Detergent is Concentrated and Uniquely Formulated with Natural Soap Additives that Cut Through Stains Making it Sparkling Clean While being Gentle on your Clothes.', 1300, NULL, NULL, '343361', NULL, 20, 1, 1, '2022-01-03 18:12:54', '2022-01-03 19:31:02', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641233555\\/erulec5cikwrtbqc8hb2.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641233555\\/rsuyibakrdkvtkgwx2d9.jpg\"]', '1250', 1, 1, '0.9'),
+(2, 'Good Mama Laundry Detergent Washing Soap  -190g', 'GOOD MAMA LAUNDRY DETERGENT WASHING SOAP Contains the Power of Stain Removal Ingredients, Which helps to Remove tough Stains in Just One wash. This Powder Detergent has Got you Covered When you Need to Wash Dirty Laundries. It Comes with High-performance Cleaning Agents and Enhanced with Fresh Sensation Aroma. The Powder Detergents Keeps Clothes Sparkling Clean with its Powerful Formula. The Detergent Removes Tough Stains on Clothes as Well as Grease and Residues. The Powder Detergent is Concentrated and Uniquely Formulated with Natural Soap Additives that Cut Through Stains Making it Sparkling Clean While being Gentle on your Clothes.', 100, NULL, NULL, '309506', NULL, 30, 1, 1, '2022-01-03 18:12:54', '2022-01-03 19:31:03', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641233565\\/xb2tztjlwzfzdexxvsis.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641233565\\/pbed29s6otyxckisva6e.jpg\"]', '90', 1, 1, '.19'),
+(3, 'Indomie Onion Flavour', 'Popular for its exotic taste, Indomie Onion Chicken flavour is made of rich ingredients, spices and chicken flavour. This flavour comes with a sachet of seasoning oil made from fresh onions in vegetable oil, which when cooked together with the seasoning sachet gives a nutrition and irresistible serving, rich in taste and aroma.', 1400, NULL, NULL, '379204', NULL, 22, 5, 1, '2022-01-03 18:26:32', '2022-01-09 09:34:02', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234067\\/grgf1fbifibypyciwdh7.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234067\\/a9enop6ioxke0zmv19i8.jpg\"]', '1230', 1, 4, '1'),
+(4, 'Indomie Regular (Indomitables)', 'Popular for its exotic taste, Indomie Onion Chicken flavour is made of rich ingredients, spices and chicken flavour. This flavour comes with a sachet of seasoning oil made from fresh onions in vegetable oil, which when cooked together with the seasoning sachet gives a nutrition and irresistible serving, rich in taste and aroma.', 1200, NULL, NULL, '734036', NULL, 15, 5, 1, '2022-01-03 18:26:32', '2022-01-03 19:31:03', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234143\\/gv6rgn0xfex6nkpjflmr.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234143\\/wstwdphsidlgaoqdhynx.jpg\"]', '1150', 1, 4, '1'),
+(5, 'Indomie Relish', 'Popular for its exotic taste, Indomie Relish Chicken flavour is made of rich ingredients, spices and chicken flavour. This flavour comes with a sachet of seasoning oil made from fresh onions in vegetable oil, which when cooked together with the seasoning sachet gives a nutrition and irresistible serving, rich in taste and aroma.', 800, NULL, NULL, '154583', NULL, 12, 5, 1, '2022-01-03 18:26:32', '2022-01-03 19:31:04', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234197\\/b9avaibd0xklkshcrztt.jpg\"]', '750', 1, 4, '0.18'),
+(6, 'Klin Detergent - 1000g', 'So Klin Concentrate detergent powder provides powerful cleaning for your clothes and it is renowned for working well on whites. Can also be used for kitchen, bath room and toilet walls. It’s new Odour Guard Technology - offers effective odour control even after long soak or indoor drying', 350, NULL, NULL, '32367', NULL, 20, 1, 1, '2022-01-03 18:26:32', '2022-01-03 19:31:05', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234309\\/lllc5mpzl3mazjxetoaj.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234309\\/hk0jxalkhw6fkmgro8ar.jpg\"]', '330', 1, 2, '1'),
+(7, 'So Klin - 190g', 'So Klin Concentrate detergent powder provides powerful cleaning for your clothes and it is renowned for working well on whites. Can also be used for kitchen, bath room and toilet walls. It’s new Odour Guard Technology - offers effective odour control even after long soak or indoor drying', 120, NULL, NULL, '889464', NULL, 16, 1, 1, '2022-01-03 18:26:32', '2022-01-09 09:34:02', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234384\\/rm97lii7esbxznwryivz.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641234384\\/pukx2zjkmfvlilxk9jp5.jpg\"]', '110', 1, 2, '0.19'),
+(8, 'Cway Dispenser', 'it does not require electricity to operate, just close the pump on top of a standard plastic water bottle and then press down the pump to have water gush out for drinking.', 600, NULL, NULL, '852068', NULL, 25, 5, 1, '2022-01-03 18:45:33', '2022-01-03 19:31:06', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235442\\/v5gugzr9h4dhtki20pfb.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235442\\/mjufcokwapxnvvfrcmmn.jpg\"]', '550', 1, 7, '1'),
+(9, 'Cway Bottle water', 'it does not require electricity to operate, just close the pump on top of a standard plastic water bottle and then press down the pump to have water gush out for drinking.', 1500, NULL, NULL, '577372', NULL, 98, 5, 1, '2022-01-03 18:45:33', '2022-01-05 19:35:21', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235478\\/tx2s8aca5fffjdlppdwn.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235479\\/l7rsp5g6s0vd6h0bza02.jpg\"]', '1450', 1, 7, '1'),
+(10, 'Dano Sachet Milk 90g - 12pcs', 'Dano Skimmed Milk Powder - It is an excellent choice of milk powder with 0.1 fat. It is specially formulated for consumers who want to maximize the benefits of milk but minimize the intake of fats.', 600, NULL, NULL, '376652', NULL, 139, 2, 1, '2022-01-03 18:49:38', '2022-01-13 06:59:55', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235674\\/mvwtoltwliu434h4f2is.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235674\\/l8v4bnegiunpmwfltawb.jpg\"]', '550', 1, 3, '0.9'),
+(11, 'Dano Milk 400g x1', 'Dano Skimmed Milk Powder - It is an excellent choice of milk powder with 0.1 fat. It is specially formulated for consumers who want to maximize the benefits of milk but minimize the intake of fats.', 500, NULL, NULL, '367236', NULL, 10, 2, 1, '2022-01-03 18:49:38', '2022-01-09 09:34:02', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235773\\/aoor8wnduqnmlskl4d3x.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235773\\/hrj60u1gxudkqduok2ri.jpg\"]', '450', 1, 3, '0.4'),
+(12, 'Durex Condom Icy Blue', 'Durex Extra Safe Condoms have been designed to offer you maximum protection during sex. Made from slightly thicker latex and extra silicone lubrication, Extra Safe Condoms can offer peace of mind without having to forfeit any of the pleasure. Relax and let yourself go.\nThe Durex Extra Safe condom is a thicker condom. It has a nominal width of 52.5mm with an easy-on shape. It is intimate and comfortable, lubricated and made of natural rubber latex. Each box of Durex Extra Safe 3\'s contains 3 pieces condoms.\nFeel safe and confident with the World\'s No. 1 Condom Brand.', 10500, NULL, NULL, '571937', NULL, 16, 4, 1, '2022-01-03 18:53:53', '2022-01-10 08:17:44', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235972\\/nvijku2daf94pk2xrwhc.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641235972\\/vczubuha4gqyrfyrtayk.jpg\"]', '10000', 1, 8, '1'),
+(13, 'Durex Condom Rosey Red', 'Durex Extra Safe Condoms have been designed to offer you maximum protection during sex. Made from slightly thicker latex and extra silicone lubrication, Extra Safe Condoms can offer peace of mind without having to forfeit any of the pleasure. Relax and let yourself go.\nThe Durex Extra Safe condom is a thicker condom. It has a nominal width of 52.5mm with an easy-on shape. It is intimate and comfortable, lubricated and made of natural rubber latex. Each box of Durex Extra Safe 3\'s contains 3 pieces condoms.\nFeel safe and confident with the World\'s No. 1 Condom Brand.', 15000, NULL, NULL, '271685', NULL, 24, 4, 1, '2022-01-03 18:53:53', '2022-01-09 09:34:02', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641236028\\/pebxpbwkjvlmwrzpvh9h.jpg\",\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641236028\\/pcprdqdndjrosi3wcahc.jpg\"]', '14599', 1, 8, '1'),
+(14, 'Bag of Rice', 'Bag of rice', 31000, NULL, NULL, '808297', NULL, -33, 5, 1, '2022-01-03 19:01:54', '2022-01-10 08:17:44', '[\"https:\\/\\/res.cloudinary.com\\/entermarket\\/image\\/upload\\/v1641236508\\/avpthlaf8gnd65q3jh5w.jpg\"]', '29500', 1, NULL, '50');
 
 -- --------------------------------------------------------
 
@@ -1001,10 +1003,9 @@ CREATE TABLE `stores` (
 --
 
 INSERT INTO `stores` (`id`, `name`, `location`, `image`, `connection`, `api_endpoint`, `db_host`, `db_username`, `db_password`, `created_at`, `updated_at`, `email`, `password`, `lat`, `long`, `place`) VALUES
-(1, 'Hubmart', 'lekki', 'https://res.cloudinary.com/skillsguruh/image/upload/v1627224910/javascript-1567486564472_jq9fi8.jpg', 'api', '', '', '', '', '2021-10-04 02:15:47', '2021-10-04 02:15:47', 'succy2010@gmail.com', '$2y$10$afzwMhyVtnMXNQpf1Fg9Cexyr.DD4ZgJCCLU1foDgfp6sPm8F9Oay', '19.4341667', '-99.1386111', ''),
-(2, 'Spar', 'ikoyi', 'https://res.cloudinary.com/skillsguruh/image/upload/v1627224910/javascript-1567486564472_jq9fi8.jpg', 'api', '', '', '', '', '2021-10-04 02:15:47', '2021-10-04 02:15:47', '', NULL, '11.4341667', '-90.1386111', ''),
-(3, 'Shoprite', 'ikeja', '/static/media/hubmart.663e09e1.png', 'api', '', '', '', '', '2021-10-04 02:15:47', '2021-10-04 02:15:47', '', NULL, '14.4341667', '-89.1386111', ''),
-(4, 'john store', '10 Admiralty Way, Lekki Phase 1 106104, Lagos, Nigeria', 'image', 'null', 'null', 'null', 'null', 'null', '2021-12-11 16:37:37', '2021-12-11 16:37:37', 'johndhd@gmail.com', '12345678', '6.440137', '3.4555492', 'Lekki Phase I');
+(1, 'Shopperholics', '10 Ogudu Rd, Ojota 105102, Lagos, Nigeria', 'https://res.cloudinary.com/entermarket/image/upload/v1641230730/hqxv9upj94jzqjmsnqys.png', 'null', 'null', 'null', 'null', 'null', '2022-01-03 17:25:34', '2022-01-03 17:25:34', 'shopperholics@gmail.com', '$2y$10$SaJYD4dCql5SXH2D0DbiF.h4nTQBda9Ibdw2p7sV83p.7qXf871.6', '6.5878882', '3.3805482', 'Ojota'),
+(3, 'Winnie Supermarket', '10 Admiralty Way, Lekki Phase 1 105102, Lekki, Nigeria', 'https://res.cloudinary.com/entermarket/image/upload/v1641378192/unojeu3orzckxwcidmdi.png', 'null', 'null', 'null', 'null', 'null', '2022-01-05 10:23:48', '2022-01-05 10:23:48', 'winnie@gmail.com', '$2y$10$c9uOmNTr6xleuFu/Hz1dGuYfrN4oSAIVxnveZ9s41ZSBho94UCcPO', '6.448041', '3.480237', 'Lekki Phase I'),
+(4, 'Ebeano Supermarket', 'Ketu 105102, Lagos, Nigeria', 'https://res.cloudinary.com/entermarket/image/upload/v1641378927/ijei4eeg2ndfqc0wlmse.png', 'null', 'null', 'null', 'null', 'null', '2022-01-05 10:35:38', '2022-01-05 10:35:38', 'ebeanotest@gmail.com', '$2y$10$cz1qaXnhUSxVIGCdMs28B.f0xEoE9xQS6duib8dqmGKvECneDOf5a', '6.5973037', '3.3904469', 'Kosofe');
 
 -- --------------------------------------------------------
 
@@ -1230,6 +1231,7 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `brands`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `brands_store_id_foreign` (`store_id`),
   ADD KEY `brands_category_id_foreign` (`category_id`);
 
 --
@@ -1442,7 +1444,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `carts`
@@ -1454,7 +1456,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1520,7 +1522,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `reports`
@@ -1575,16 +1577,6 @@ ALTER TABLE `wishlists`
 --
 ALTER TABLE `wishlist_items`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `brands`
---
-ALTER TABLE `brands`
-  ADD CONSTRAINT `brands_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
